@@ -136,12 +136,6 @@ class QuestionnaireManager {
             dimensionScores[answer.dimension] += answer.value;
         });
 
-        // 顯示結果
-        let resultsHTML = `
-            <h2>測驗結果</h2>
-            <div class="scores-container">
-        `;
-
         // 定義各向度的最高分（題數 × 5分）
         const maxScores = {
             "討好": 20,    // 4題
@@ -155,10 +149,50 @@ class QuestionnaireManager {
             "圓融": 25     // 5題
         };
 
+        // 定義各向度的解釋
+        const dimensionExplanations = {
+            "討好": "當面對比自己位階高、具權威性的人，如老師、家長、主管等，會抑制、隱藏個人意見，表現出與別人相似的行為，可能是受壓迫而產生犧牲、委屈，也可能是面對權威自認處於弱勢而自動投降，屬於較低自尊的表現。",
+            "忍讓": "注重關係的和諧，即使自己抱持不同看法，也會因禮貌、想避免不合而迎合其他人。這樣的情況看似討好，但動機源自於顧及關係的忍讓，而非缺乏自信。",
+            "指責護顏": "用命令、說服等方式強迫對方服從，可能源自於期望展現自身權力、位階，或是自己的自尊或面子，注重他人如何看待自己，因此發生衝突時，為了顧及顏面、名譽也會先將過錯推給對方，維護自己在其他人眼中的形象。",
+            "重理": "有注重邏輯、前因後果等特質，但不代表沒有情緒，只是不依靠內在直覺表達、行事。然而，若當事人過於堅持自己的觀點、講求理性思考，沒有顧及對方的心情，表現出以理服人、據理力爭的行為，就超出單純理智的範圍。",
+            "證己": "希望自己「有面子」，除了維護自己名譽、評價，也會主動做出提升個人評價的爭面子行為，例如，一再證明自己了解很多、證明能耐，這樣也會形成超理智的溝通方式。",
+            "打岔": "遇到困難、壓力，可能傾向會選擇逃避，包括消極抵抗，以不合作、被動、怠工等行為，讓別人無法順利稱心如意，另一種為直接離開現場或讓人感到壓力的環境，而如果無法離開空間，有些人會選擇心理上的逃避，像是閉上眼睛、沉默、心不在焉等以應對種種壓力。",
+            "迂迴": "常以委婉、攏統或模糊不清的方式溝通、想要以關係和諧為重。這種方式有時可以得到和諧的關係，有時卻會讓雙方的誤會難以被澄清。",
+            "一致": "屬於內在的自我，期許能做自己、忠於自我，能發表自己的主張、看法，但也能夠顧及他人的需求，在自己和別人的關係中進行協調，為高自尊的展現。",
+            "圓融": "屬於外在(關係)的自我，展現對自己的要求和修養，在人際互動中善盡自身義務，如在家重視家庭、在工作中重視與同事的關係，面對不同意見能溝通協調、彈性改變，也是高自尊的表現。"
+        };
+
+        // 計算並排序各向度的分數
+        let dimensionScoresArray = Object.entries(dimensionScores).map(([dimension, score]) => ({
+            dimension,
+            score,
+            percentage: Math.round((score / maxScores[dimension]) * 100)
+        }));
+
+        // 根據百分比排序
+        dimensionScoresArray.sort((a, b) => b.percentage - a.percentage);
+
+        // 顯示結果
+        let resultsHTML = `
+            <h2>測驗結果</h2>
+            <div class="top-dimensions">
+                <h3>您最突出的三個溝通特質：</h3>
+                <div class="dimension-explanations">
+                    ${dimensionScoresArray.slice(0, 3).map((item, index) => `
+                        <div class="dimension-explanation">
+                            <h4>${index + 1}. ${item.dimension}（${item.percentage}分）</h4>
+                            <p>${dimensionExplanations[item.dimension]}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <div class="scores-container">
+        `;
+
         // 依序顯示各向度的得分
         for (const [dimension, score] of Object.entries(dimensionScores)) {
             const maxScore = maxScores[dimension];
-            const percentage = (score / maxScore) * 100;
+            const percentage = Math.round((score / maxScore) * 100);
             
             resultsHTML += `
                 <div class="score-item">
@@ -182,9 +216,115 @@ class QuestionnaireManager {
                 <br><br>
                 ※有關於問卷填寫，由於問卷常模仍然在建置當中，量表分數的解釋偏向教育性質，而非臨床診斷。希望問卷的這些解釋可以幫助你對自己有更多的認識。
             </div>
+            <div class="all-dimensions-explanation">
+                <h3>各向度說明</h3>
+                <div class="dimension-grid">
+                    <div class="dimension-card">
+                        <h4>討好</h4>
+                        <p>${dimensionExplanations["討好"]}</p>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>忍讓</h4>
+                        <p>${dimensionExplanations["忍讓"]}</p>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>指責護顏</h4>
+                        <p>${dimensionExplanations["指責護顏"]}</p>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>重理</h4>
+                        <p>${dimensionExplanations["重理"]}</p>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>證己</h4>
+                        <p>${dimensionExplanations["證己"]}</p>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>打岔</h4>
+                        <p>${dimensionExplanations["打岔"]}</p>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>迂迴</h4>
+                        <p>${dimensionExplanations["迂迴"]}</p>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>一致</h4>
+                        <p>${dimensionExplanations["一致"]}</p>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>圓融</h4>
+                        <p>${dimensionExplanations["圓融"]}</p>
+                    </div>
+                </div>
+            </div>
         `;
         
         this.resultsDiv.innerHTML = resultsHTML;
+
+        // 修改 CSS 樣式
+        const style = document.createElement('style');
+        style.textContent = `
+            .top-dimensions {
+                margin: 20px 0;
+                padding: 20px;
+                background: #f5f5f5;
+                border-radius: 8px;
+            }
+            .dimension-explanations {
+                margin-top: 15px;
+            }
+            .dimension-explanation {
+                margin-bottom: 20px;
+            }
+            .dimension-explanation h4 {
+                color: #333;
+                margin-bottom: 8px;
+            }
+            .dimension-explanation p {
+                color: #666;
+                line-height: 1.6;
+            }
+            .all-dimensions-explanation {
+                margin: 40px 0;
+                padding: 20px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            }
+
+            .all-dimensions-explanation h3 {
+                color: #333;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            .dimension-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+                padding: 10px;
+            }
+
+            .dimension-card {
+                background: #f8f9fa;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .dimension-card h4 {
+                color: var(--primary-color);
+                margin-bottom: 10px;
+                font-size: 18px;
+            }
+
+            .dimension-card p {
+                color: #666;
+                line-height: 1.6;
+                font-size: 15px;
+            }
+        `;
+        document.head.appendChild(style);
 
         // 為重新測驗按鈕添加事件監聽
         document.getElementById('retakeBtn').addEventListener('click', () => {
