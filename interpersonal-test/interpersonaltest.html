@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>台灣人人際互動量表</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>台灣人人際互動量表</h1>
+        <div id="progress-bar">
+            <div id="progress"></div>
+            <span id="question-counter">題目 0/37</span>
+        </div>
+        <div id="question-container">
+            <div id="current-question"></div>
+            <div class="options">
+                <button class="option" data-value="1">幾乎不會如此</button>
+                <button class="option" data-value="2">很少如此</button>
+                <button class="option" data-value="3">有時如此</button>
+                <button class="option" data-value="4">常常如此</button>
+                <button class="option" data-value="5">總是如此</button>
+            </div>
+        </div>
+        <div id="results" style="display: none;"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
