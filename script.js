@@ -136,7 +136,7 @@ class QuestionnaireManager {
             dimensionScores[answer.dimension] += answer.value;
         });
 
-        // 顯示��果
+        // 顯示結果
         let resultsHTML = `
             <h2>測驗結果</h2>
             <div class="scores-container">
@@ -176,6 +176,12 @@ class QuestionnaireManager {
         resultsHTML += `
             </div>
             <button id="retakeBtn" class="retake-btn">再測一次</button>
+            <div class="citation">
+                此量表出自顏欣怡, & 卓紋君。（2020）。Satir 溝通姿態之反思暨台灣人人際溝通量表之修訂。中華心理衛生學刊，33(4)，381-415。
+                <a href="https://www.airitilibrary.com/Article/Detail/10237283-202012-202101040003-202101040003-381-415" target="_blank">原文連結</a>
+                <br><br>
+                ※有關於問卷填寫，由於問卷常模仍然在建置當中，量表分數的解釋偏向教育性質，而非臨床診斷。希望問卷的這些解釋可以幫助你對自己有更多的認識。
+            </div>
         `;
         
         this.resultsDiv.innerHTML = resultsHTML;
