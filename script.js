@@ -164,7 +164,7 @@ class QuestionnaireManager {
                 <div class="score-item">
                     <div class="score-header">
                         <span class="dimension-name">${dimension}</span>
-                        <span class="score-value">${score}分</span>
+                        <span class="score-value">${percentage}分</span>
                     </div>
                     <div class="score-bar-container">
                         <div class="score-bar" style="width: ${percentage}%"></div>
