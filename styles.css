@@ -1,0 +1,202 @@
+:root {
+    --primary-color: #A17A69;     /* 暖棕色 */
+    --secondary-color: #D4B2A7;   /* 淺暖棕 */
+    --background-color: #FAF6F3;  /* 米白色 */
+    --text-color: #2C1810;        /* 深棕色 */
+    --hover-color: #8B6355;       /* 深暖棕 */
+    --progress-bg: #E8E0DC;       /* 淺米色 */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: var(--text-color);
+}
+
+#progress-bar {
+    width: 100%;
+    height: 6px;  /* 更細的進度條 */
+    background-color: var(--progress-bg);
+    border-radius: 3px;
+    margin: 30px 0;
+    position: relative;
+}
+
+#progress {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#question-counter {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    font-size: 14px;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+#current-question {
+    font-size: 24px;
+    margin: 60px 0;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 0 20px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.option {
+    padding: 16px 24px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 17px;
+    width: 100%;
+    text-align: center;
+    color: var(--text-color);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.option:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.option:active {
+    transform: translateY(0);
+}
+
+.option.selected {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: transparent;
+}
+
+/* 結果頁面樣式 */
+.scores-container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+}
+
+.score-item {
+    margin-bottom: 25px;
+}
+
+.score-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.dimension-name {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.score-value {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.score-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: var(--progress-bg);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.score-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.retake-btn {
+    display: block;
+    margin: 40px auto;
+    padding: 16px 32px;
+    font-size: 17px;
+    font-weight: 500;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.retake-btn:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.retake-btn:active {
+    transform: translateY(0);
+}
+
+/* 添加響應式設計 */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    #current-question {
+        font-size: 20px;
+        margin: 40px 0;
+    }
+
+    .option {
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+}
