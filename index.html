@@ -3,28 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>台灣人人際互動量表</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>人際互動測驗</title>
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
     <div class="container">
-        <h1>台灣人人際互動量表</h1>
-        <div id="progress-bar">
-            <div id="progress"></div>
-            <span id="question-counter">題目 0/37</span>
-        </div>
-        <div id="question-container">
-            <div id="current-question"></div>
-            <div class="options">
-                <button class="option" data-value="1">幾乎不會如此</button>
-                <button class="option" data-value="2">很少如此</button>
-                <button class="option" data-value="3">有時如此</button>
-                <button class="option" data-value="4">常常如此</button>
-                <button class="option" data-value="5">總是如此</button>
+        <div class="content">
+            <h1>人際互動測驗</h1>
+            <p class="description">
+                這是一個幫助你了解自己溝通模式的測驗。測驗包含37個問題，
+                完成後你將了解自己在九個不同溝通向度上的傾向。
+            </p>
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">⏱️</span>
+                    <p>測驗時間約5分鐘</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">📊</span>
+                    <p>獲得測驗解釋</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🤝</span>
+                    <p>了解自己的溝通模式</p>
+                </div>
+            </div>
+            <a href="index.html" class="start-btn">開始測驗</a>
+            <div class="citation">
+                此量表出自顏欣怡, & 卓紋君。（2020）。Satir 溝通姿態之反思暨台灣人人際溝通量表之修訂。
+                中華心理衛生學刊，33(4)，381-415。
             </div>
         </div>
-        <div id="results" style="display: none;"></div>
     </div>
-    <script src="script.js"></script>
 </body>
-</html>
+</html> 
