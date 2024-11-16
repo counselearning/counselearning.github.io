@@ -393,3 +393,30 @@ h2 {
         margin-bottom: 5px;
     }
 }
+
+/* 添加導航按鈕的樣式 */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.nav-button {
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.nav-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

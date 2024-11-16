@@ -67,7 +67,10 @@ class QuestionnaireManager {
         this.questionCounter = document.getElementById('question-counter');
         this.resultsDiv = document.getElementById('results');
         
+        this.prevButton = document.getElementById('prev-button');
+        
         this.initializeOptions();
+        this.initializeNavigation();
         this.showQuestion();
     }
 
@@ -98,6 +101,12 @@ class QuestionnaireManager {
         });
     }
 
+    initializeNavigation() {
+        this.prevButton.addEventListener('click', () => {
+            this.goToPreviousQuestion();
+        });
+    }
+
     showQuestion() {
         if (this.currentQuestionIndex < this.shuffledQuestions.length) {
             const question = this.shuffledQuestions[this.currentQuestionIndex];
@@ -107,8 +116,34 @@ class QuestionnaireManager {
             const progress = ((this.currentQuestionIndex + 1) / this.shuffledQuestions.length) * 100;
             this.progressBar.style.width = `${progress}%`;
             this.questionCounter.textContent = `題目 ${this.currentQuestionIndex + 1}/37`;
+
+            // 控制上一題按鈕的顯示
+            this.prevButton.style.display = this.currentQuestionIndex > 0 ? 'block' : 'none';
+
+            // 如果該題已經作答過，顯示之前的選擇
+            const previousAnswer = this.answers[question.id];
+            if (previousAnswer) {
+                const options = document.querySelectorAll('.option');
+                options.forEach(option => {
+                    if (parseInt(option.dataset.value) === previousAnswer.value) {
+                        option.classList.add('selected');
+                    } else {
+                        option.classList.remove('selected');
+                    }
+                });
+            } else {
+                // 如果是新題目，清除所有選中狀態
+                document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            }
         } else {
             this.showResults();
+        }
+    }
+
+    goToPreviousQuestion() {
+        if (this.currentQuestionIndex > 0) {
+            this.currentQuestionIndex--;
+            this.showQuestion();
         }
     }
 
