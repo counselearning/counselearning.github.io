@@ -215,6 +215,8 @@ h1 {
 .search-icon {
     position: absolute;
     left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 20px;
     height: 20px;
     pointer-events: none;
@@ -244,6 +246,17 @@ h1 {
     .search-input {
         padding: 12px 15px 12px 45px;
         font-size: 15px;
+    }
+
+    .search-icon {
+        left: 14px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .search-button {
+        width: 100%;
+        padding: 12px 20px;
     }
 }
 
