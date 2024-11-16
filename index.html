@@ -66,10 +66,22 @@
             </svg>
             <h1>雲端心理測驗平台</h1>
         </div>
+        <p class="page-description">
+            <strong>溫馨提醒：</strong>本網站之測驗僅供自我學習或休閒用途，不能代表任何臨床診斷，若您有較嚴重的困擾，請務必尋求專業協助！
+        </p>
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="搜尋測驗..." id="searchTests">
+                <div class="search-icon"></div>
+                <button class="search-button" id="searchButton">搜尋</button>
+            </div>
+        </div>
+        <div class="search-results-info" id="searchInfo"></div>
+        <div class="search-results-divider" id="searchDivider"></div>
         <div class="tests-grid">
             <a href="./interpersonal-test/index.html" class="test-card">
                 <div class="test-content">
-                    <h2>台灣人人際互動量表</h2>
+                    <h2>台灣人人際溝通量表</h2>
                     <p>透過37個問題了解你在人際互動中的溝通模式</p>
                     <div class="test-info">
                         <span class="duration">約需時間：5分鐘</span>
@@ -80,5 +92,196 @@
             <!-- 未來可以在這裡添加更多測驗卡片 -->
         </div>
     </div>
+    <script>
+    function normalizeChineseText(text) {
+        // 建立異體字對照表
+        const variants = {
+            // 繁簡體對照
+            '臺': '台',
+            '裡': '里',
+            '佇': '住',
+            '瞭': '了',
+            '曆': '歷',
+            '檯': '台',
+            '瑯': '琅',
+            '甯': '寧',
+            '佔': '占',
+            '纔': '才',
+            '衆': '眾',
+            '峯': '峰',
+            '棱': '稜',
+            '污': '汙',
+            
+            // 常見異體字
+            '淨': '凈',
+            '裏': '裡',
+            '姊': '姐',
+            '啟': '啓',
+            '囉': '羅',
+            '檢': '検',
+            '查': '査',
+            '閒': '閑',
+            '綫': '線',
+            '峽': '峡',
+            
+            // 量詞異體
+            '個': '个',
+            '隻': '只',
+            '裡': '裏',
+            
+            // 常用詞異體
+            '群眾': '群衆',
+            '讚': '贊',
+            '歲': '嵗',
+            '溫': '温',
+            '賬': '帳',
+            '徵': '征',
+            
+            // 地名常見異體
+            '臺灣': '台灣',
+            '臺北': '台北',
+            '臺中': '台中',
+            '臺南': '台南',
+            '臺東': '台東',
+            
+            // 數字異體
+            '壹': '一',
+            '貳': '二',
+            '參': '三',
+            '肆': '四',
+            '伍': '五',
+            '陸': '六',
+            '柒': '七',
+            '捌': '八',
+            '玖': '九',
+            '拾': '十',
+            
+            // 常見錯別字對照
+            '准': '準',
+            '余': '餘',
+            '后': '後',
+            '麵': '面',
+            '復': '複',
+        };
+        
+        // 先處理較長的詞組
+        const phrases = ['臺灣', '臺北', '臺中', '臺南', '臺東', '群眾'];
+        phrases.forEach(phrase => {
+            if (variants[phrase]) {
+                text = text.replace(new RegExp(phrase, 'g'), variants[phrase]);
+            }
+        });
+        
+        // 再處理單字
+        return text.split('').map(char => variants[char] || char).join('');
+    }
+
+    function calculateSimilarity(str1, str2) {
+        // 將字串轉換為小寫並移除空格，同時處理異體字
+        str1 = normalizeChineseText(str1.toLowerCase().replace(/\s+/g, ''));
+        str2 = normalizeChineseText(str2.toLowerCase().replace(/\s+/g, ''));
+        
+        // 計算最長公共子序列(LCS)長度
+        const m = str1.length;
+        const n = str2.length;
+        const dp = Array(m + 1).fill().map(() => Array(n + 1).fill(0));
+        
+        for (let i = 1; i <= m; i++) {
+            for (let j = 1; j <= n; j++) {
+                if (str1[i - 1] === str2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        
+        return dp[m][n] / Math.max(m, n);
+    }
+
+    function performSearch() {
+        const searchTerm = normalizeChineseText(document.getElementById('searchTests').value.toLowerCase());
+        const testCards = document.querySelectorAll('.test-card');
+        const searchInfo = document.getElementById('searchInfo');
+        const searchDivider = document.getElementById('searchDivider');
+        
+        if (!searchTerm.trim()) {
+            testCards.forEach(card => card.style.display = '');
+            searchInfo.style.display = 'none';
+            searchDivider.style.display = 'none';
+            return;
+        }
+
+        let exactMatches = 0;
+        let fuzzyMatches = [];
+
+        testCards.forEach(card => {
+            const title = normalizeChineseText(card.querySelector('h2').textContent);
+            const description = normalizeChineseText(card.querySelector('p').textContent);
+            const titleLower = title.toLowerCase();
+            const descriptionLower = description.toLowerCase();
+
+            // 檢查精確匹配
+            if (titleLower.includes(searchTerm) || descriptionLower.includes(searchTerm)) {
+                card.style.display = '';
+                exactMatches++;
+            } else {
+                // 檢查模糊匹配
+                const titleSimilarity = calculateSimilarity(searchTerm, titleLower);
+                const descSimilarity = calculateSimilarity(searchTerm, descriptionLower);
+                const similarity = Math.max(titleSimilarity, descSimilarity);
+
+                if (similarity > 0.3) {
+                    fuzzyMatches.push({
+                        card: card,
+                        similarity: similarity
+                    });
+                    card.style.display = 'none';
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+        });
+
+        // 更新搜尋結果信息
+        if (exactMatches === 0 && fuzzyMatches.length === 0) {
+            searchInfo.innerHTML = `<strong>找不到符合 "${searchTerm}" 的測驗</strong><br>請嘗試其他關鍵字`;
+            searchInfo.style.display = 'block';
+            searchDivider.style.display = 'none';
+        } else {
+            let infoText = '';
+            if (exactMatches > 0) {
+                infoText = `<strong>找到 ${exactMatches} 個符合的測驗</strong>`;
+            }
+            if (fuzzyMatches.length > 0) {
+                fuzzyMatches.sort((a, b) => b.similarity - a.similarity);
+                
+                if (exactMatches > 0) {
+                    searchDivider.style.display = 'block';
+                    infoText += '<br><br>您可能也對以下測驗感興趣：';
+                } else {
+                    infoText = '<strong>找不到完全符合的測驗</strong><br>以下是相關推薦：';
+                }
+
+                fuzzyMatches.forEach(match => {
+                    match.card.style.display = '';
+                });
+            }
+            searchInfo.innerHTML = infoText;
+            searchInfo.style.display = 'block';
+        }
+    }
+
+    // 點擊搜尋按鈕時執行搜尋
+    document.getElementById('searchButton').addEventListener('click', performSearch);
+
+    // 按下 Enter 鍵時執行搜尋
+    document.getElementById('searchTests').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            performSearch();
+        }
+    });
+    </script>
 </body>
 </html> 
