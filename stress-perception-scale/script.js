@@ -20,6 +20,12 @@ class PSSTest {
         this.currentQuestion = 0;
         this.answers = new Array(this.questions.length).fill(null);
         this.positiveQuestions = [3, 4, 5, 6, 8, 9, 12]; // 正向題目的索引（從0開始）
+        
+        // 新增快取機制
+        this.cache = {
+            elements: {},
+            results: {}
+        };
     }
 
     initialize() {
@@ -50,6 +56,21 @@ class PSSTest {
         if (this.prevButton) {
             this.prevButton.addEventListener('click', () => this.previousQuestion());
         }
+        
+        // 新增鍵盤導航
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('test').style.display === 'block') {
+                if (e.key === 'ArrowLeft' && this.currentQuestion > 0) {
+                    this.previousQuestion();
+                } else if (e.key >= '1' && e.key <= '5') {
+                    const value = parseInt(e.key) - 1;
+                    const options = this.questionContainer.querySelectorAll('.option');
+                    if (options[value]) {
+                        options[value].click();
+                    }
+                }
+            }
+        });
     }
 
     startTest() {
@@ -61,22 +82,25 @@ class PSSTest {
     showQuestion() {
         const question = this.questions[this.currentQuestion];
         this.questionContainer.innerHTML = `
-            <div id="current-question">${question}</div>
-            <div class="options">
-                <button class="option" data-value="0">從不</button>
-                <button class="option" data-value="1">偶爾</button>
-                <button class="option" data-value="2">有時</button>
-                <button class="option" data-value="3">時常</button>
-                <button class="option" data-value="4">總是</button>
+            <div id="current-question" role="heading" aria-level="2">${question}</div>
+            <div class="options" role="radiogroup" aria-label="選項">
+                <button class="option" data-value="0" role="radio" aria-checked="false">從不</button>
+                <button class="option" data-value="1" role="radio" aria-checked="false">偶爾</button>
+                <button class="option" data-value="2" role="radio" aria-checked="false">有時</button>
+                <button class="option" data-value="3" role="radio" aria-checked="false">時常</button>
+                <button class="option" data-value="4" role="radio" aria-checked="false">總是</button>
             </div>
         `;
 
-        // 設置已選答案
+        // 更新已選答案的狀態
         if (this.answers[this.currentQuestion] !== null) {
             const selectedOption = this.questionContainer.querySelector(
                 `.option[data-value="${this.answers[this.currentQuestion]}"]`
             );
-            if (selectedOption) selectedOption.classList.add('selected');
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+                selectedOption.setAttribute('aria-checked', 'true');
+            }
         }
 
         // 綁定選項點擊事件
@@ -109,38 +133,60 @@ class PSSTest {
     }
 
     calculateScore() {
+        const cacheKey = this.answers.join(',');
+        if (this.cache.results[cacheKey]) {
+            return this.cache.results[cacheKey];
+        }
+
         let totalScore = 0;
         this.answers.forEach((answer, index) => {
             if (this.positiveQuestions.includes(index)) {
-                // 正向題目反向計分
                 totalScore += 4 - answer;
             } else {
-                // 負向題目正向計分
                 totalScore += answer;
             }
         });
+
+        this.cache.results[cacheKey] = totalScore;
         return totalScore;
     }
 
     getResultText(score) {
-        if (score <= 28) {
-            return "您的壓力程度屬於正常範圍。";
-        } else if (score <= 42) {
-            return "您的壓力程度偏大，建議適當注意調節。";
-        } else {
-            return "您的壓力程度較高，建議尋求專業協助。";
-        }
+        const resultRanges = [
+            { max: 28, text: "您的壓力程度屬於正常範圍。" },
+            { max: 42, text: "您的壓力程度偏大，建議適當注意調節。" },
+            { max: Infinity, text: "您的壓力程度較高，建議尋求專業協助。" }
+        ];
+
+        return resultRanges.find(range => score <= range.max).text;
     }
 
     showResult() {
         const score = this.calculateScore();
         const resultText = this.getResultText(score);
+        const resultLevel = this.getResultLevel(score);
         
         this.resultSection.innerHTML = `
-            <h2>測驗結果</h2>
+            <a href="index.html" class="close-button">×</a>
+            <h1>測驗結果</h1>
             <div class="score-container">
-                <div class="score">${score}</div>
-                <p class="result-text">${resultText}</p>
+                <div class="score-wrapper">
+                    <div class="score-label">壓力指數</div>
+                    <div class="score ${resultLevel.className}">${score}</div>
+                    <div class="score-range">${resultLevel.range}</div>
+                </div>
+                <div class="result-detail">
+                    <h3 class="result-title">${resultLevel.title}</h3>
+                    <p class="result-text">${resultText}</p>
+                    <div class="result-suggestions">
+                        ${resultLevel.suggestions.map(suggestion => 
+                            `<div class="suggestion-item">
+                                <span class="suggestion-icon">💡</span>
+                                <span>${suggestion}</span>
+                            </div>`
+                        ).join('')}
+                    </div>
+                </div>
             </div>
             <button class="primary-button" onclick="location.reload()">重新測驗</button>
             <div class="result-note">
@@ -166,6 +212,46 @@ class PSSTest {
         if (this.currentQuestion > 0) {
             this.currentQuestion--;
             this.showQuestion();
+        }
+    }
+
+    getResultLevel(score) {
+        if (score <= 28) {
+            return {
+                className: 'score-normal',
+                range: '0-28',
+                title: '壓力程度正常',
+                text: '您的壓力程度屬於正常範圍。',
+                suggestions: [
+                    '保持良好的生活作息',
+                    '持續培養興趣愛好',
+                    '維持規律運動習慣'
+                ]
+            };
+        } else if (score <= 42) {
+            return {
+                className: 'score-warning',
+                range: '29-42',
+                title: '壓力程度偏高',
+                text: '您的壓力程度偏大，建議適當注意調節。',
+                suggestions: [
+                    '學習放鬆技巧如深呼吸',
+                    '與親友分享心情',
+                    '適度調整工作節奏'
+                ]
+            };
+        } else {
+            return {
+                className: 'score-danger',
+                range: '43+',
+                title: '壓力程度過高',
+                text: '您的壓力程度較高，建議尋求專業協助。',
+                suggestions: [
+                    '建議尋求心理諮商協助',
+                    '重新檢視生活步調',
+                    '加強自我照顧能力'
+                ]
+            };
         }
     }
 }

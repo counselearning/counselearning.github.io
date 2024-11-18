@@ -71,23 +71,53 @@ font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
 1. **檔案結構**
 README.md
 /test-name/
-├── index.html # 測驗介紹頁
-├── test.html # 測驗頁面
-├── styles.css # 測驗特定樣式
-└── script.js # 測驗邏輯
+├── index.html    # 單一測驗頁面（包含介紹頁和測驗內容）
+├── styles.css    # 測驗樣式
+└── script.js     # 測驗邏輯
 
-2. **必要元素**
+2. **頁面結構**
+html
+<div class="container">
+<!-- 入口頁面 -->
+<section id="intro" class="section">
+<h1>測驗名稱</h1>
+<div class="description">測驗說明...</div>
+<button id="startTest" class="start-btn">開始測驗</button>
+</section>
+<!-- 測驗頁面 -->
+<section id="test" class="section hidden">
+<div class="progress-bar">
+<div class="progress-fill"></div>
+</div>
+<!-- 測驗內容 -->
+</section>
+<!-- 結果頁面 -->
+<section id="result" class="section hidden">
+<!-- 結果內容 -->
+</section>
+</div>
+
+3. **必要元素**
 - 返回首頁按鈕
-- 測驗說明
-- 進度指示器
+- 測驗說明（在入口頁面）
+- 進度指示器（在測驗頁面）
 - 結果頁面
 - 引用來源（如適用）
+- 重新測驗按鈕（在結果頁面）
 
-3. **注意事項**
+4. **頁面切換邏輯**
+- 使用 CSS class 控制頁面顯示/隱藏
+- 透過 JavaScript 事件控制頁面轉換
+- 確保單向流程：入口頁 -> 測驗頁 -> 結果頁
+- 提供適當的轉場動畫
+
+5. **注意事項**
 - 保持與現有設計風格一致
 - 確保響應式設計
 - 添加適當的載入和過渡動畫
 - 保持無障礙設計原則
+- 避免使用多個 HTML 檔案
+- 使用 section 標籤區分不同頁面內容
 
 ## 開發原則
 

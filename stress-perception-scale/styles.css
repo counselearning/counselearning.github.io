@@ -20,9 +20,9 @@ body {
 
 .container {
     position: relative;
-    width: min(90%, 800px);
+    width: min(95%, 800px);
     margin: 0 auto;
-    padding: clamp(20px, 4vw, 40px);
+    padding: clamp(15px, 3vw, 30px);
 }
 
 .content {
@@ -59,19 +59,20 @@ body {
 }
 
 /* 標題和描述 */
-h1 {
-    font-size: clamp(28px, 5vw, 36px);
-    margin-bottom: clamp(30px, 5vw, 40px);
+h1, .test-title {
+    font-size: clamp(22px, 4vw, 32px);
+    margin-bottom: clamp(20px, 4vw, 40px);
     color: var(--text-color);
     font-weight: 600;
+    line-height: 1.3;
 }
 
 .description {
-    font-size: clamp(16px, 3vw, 18px);
+    font-size: clamp(15px, 2.5vw, 18px);
     line-height: 1.6;
     color: var(--text-color);
-    margin: 0 auto clamp(40px, 6vw, 60px);
-    max-width: 600px;
+    margin: 0 auto clamp(30px, 5vw, 50px);
+    max-width: min(100%, 600px);
 }
 
 /* 測驗資訊 */
@@ -87,12 +88,12 @@ h1 {
 /* 進度條 */
 .progress-container {
     width: 100%;
-    margin-bottom: 30px;
+    margin: clamp(25px, 5vw, 40px) 0;
 }
 
 .progress-bar {
     width: 100%;
-    height: 8px;
+    height: clamp(4px, 1vw, 8px);
     background-color: var(--secondary-color);
     border-radius: 4px;
     margin-top: 30px;
@@ -104,14 +105,14 @@ h1 {
     height: 100%;
     background-color: var(--primary-color);
     border-radius: 4px;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .question-counter {
     position: absolute;
     top: -25px;
     left: 0;
-    font-size: 14px;
+    font-size: clamp(12px, 2vw, 14px);
     color: var(--text-color);
     opacity: 0.8;
 }
@@ -148,16 +149,16 @@ h1 {
 .options {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: var(--spacing-base);
+    gap: clamp(8px, 2vw, 12px);
+    margin: clamp(15px, 3vw, 25px) 0;
     width: 100%;
 }
 
 .option {
     width: 100%;
-    padding: clamp(12px, 3vw, 16px);
-    font-size: var(--font-size-base);
-    min-height: 44px;
+    padding: clamp(12px, 2.5vw, 20px);
+    font-size: clamp(14px, 2.5vw, 16px);
+    min-height: clamp(44px, 8vw, 52px);
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     background-color: white;
@@ -167,6 +168,22 @@ h1 {
     color: var(--text-color);
     position: relative;
     overflow: hidden;
+}
+
+.option::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s;
+}
+
+.option:active::after {
+    transform: translate(-50%, -50%) scale(2);
 }
 
 .option:hover {
@@ -246,32 +263,134 @@ h1 {
     }
 }
 
-/* 結果頁面樣式 */
+/* 結果頁面樣式優化 */
 .score-container {
-    text-align: center;
+    background: var(--background-color);
+    border-radius: 24px;
+    padding: clamp(15px, 3vw, 30px);
     margin: 40px 0;
+    display: grid;
+    gap: clamp(20px, 4vw, 30px);
+}
+
+.score-wrapper {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.score-label {
+    font-size: 16px;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-bottom: 10px;
 }
 
 .score {
-    font-size: clamp(48px, 10vw, 72px);
+    font-size: clamp(36px, 8vw, 72px);
+    font-weight: 700;
+    margin: 10px 0;
+    line-height: 1;
+}
+
+.score-normal {
+    color: #4CAF50;
+}
+
+.score-warning {
+    color: #FF9800;
+}
+
+.score-danger {
+    color: #F44336;
+}
+
+.score-range {
+    font-size: 14px;
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+.result-detail {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.result-title {
+    font-size: clamp(18px, 3.5vw, 24px);
+    color: var(--text-color);
+    margin-bottom: 15px;
     font-weight: 600;
-    color: var(--primary-color);
-    margin-bottom: 20px;
 }
 
 .result-text {
-    font-size: clamp(18px, 4vw, 24px);
-    line-height: 1.5;
-    margin-bottom: 30px;
+    font-size: clamp(15px, 2.5vw, 18px);
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 25px;
 }
 
-.result-note {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    font-size: 14px;
+.result-suggestions {
+    display: grid;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: clamp(14px, 2.5vw, 16px);
     color: var(--text-color);
-    opacity: 0.7;
+    padding: clamp(10px, 2vw, 15px);
+    background: var(--background-color);
+    border-radius: 8px;
+}
+
+.suggestion-icon {
+    font-size: clamp(20px, 4vw, 24px);
+}
+
+.primary-button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: clamp(8px, 1.5vw, 12px);
+    padding: clamp(12px, 2.5vw, 20px) clamp(20px, 4vw, 32px);
+    font-size: clamp(14px, 2.5vw, 16px);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 30px auto;
+    display: block;
+    width: fit-content;
+}
+
+.primary-button:hover {
+    background: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 響應式調整 */
+@media (max-width: 480px) {
+    .score-container {
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .result-detail {
+        padding: 20px;
+    }
+
+    .suggestion-item {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
 
 /* 響應式調整 */
@@ -289,17 +408,19 @@ h1 {
 /* 新增特性區塊樣式 */
 .features {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(20px, 4vw, 30px);
-    margin: 0 auto clamp(40px, 6vw, 60px);
-    max-width: 600px;
+    grid-template-columns: 1fr;
+    gap: clamp(15px, 3vw, 30px);
+    margin: clamp(30px, 5vw, 50px) auto;
+    width: 100%;
+    max-width: 800px;
 }
 
 .feature {
-    padding: clamp(20px, 4vw, 30px);
+    padding: clamp(15px, 3vw, 25px);
     background: var(--background-color);
     border-radius: 16px;
     transition: transform 0.3s ease;
+    width: 100%;
 }
 
 .feature:hover {
@@ -307,7 +428,7 @@ h1 {
 }
 
 .feature-icon {
-    font-size: clamp(24px, 5vw, 32px);
+    font-size: clamp(24px, 4vw, 32px);
     margin-bottom: 10px;
     display: block;
 }
@@ -342,10 +463,10 @@ h1 {
 
 .close-button {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
+    top: clamp(15px, 3vw, 20px);
+    right: clamp(15px, 3vw, 20px);
+    width: clamp(32px, 6vw, 40px);
+    height: clamp(32px, 6vw, 40px);
     border-radius: 50%;
     background-color: var(--primary-color);
     color: white;
@@ -353,7 +474,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: clamp(20px, 4vw, 24px);
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -452,7 +573,7 @@ h1 {
     height: 100%;
     background-color: var(--primary-color);
     border-radius: 2px;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .question-counter {
@@ -466,16 +587,17 @@ h1 {
 
 /* 問題容器 */
 #current-question {
-    background: white;
-    padding: 20px 30px;
+    background: var(--background-color);
+    padding: clamp(15px, 3vw, 30px);
     border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    font-size: clamp(18px, 3.5vw, 24px);
-    line-height: 1.6;
-    margin: 30px 0;
+    box-shadow: none;
+    font-size: clamp(16px, 3vw, 22px);
+    line-height: 1.5;
+    margin: clamp(20px, 4vw, 40px) 0;
     text-align: center;
     color: var(--text-color);
-    font-weight: 500;
+    font-weight: 700;
+    border: none;
 }
 
 /* 選項樣式 */
@@ -557,6 +679,7 @@ h1 {
         padding: 15px 20px;
         font-size: 16px;
         margin: 20px 0;
+        font-weight: 700;
     }
 
     .option {
@@ -610,7 +733,7 @@ h1 {
     height: 100%;
     background-color: var(--primary-color);
     border-radius: 4px;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 關閉按鈕位置調整 */
@@ -784,5 +907,160 @@ h1 {
     .secondary-button {
         padding: 10px 16px;
         font-size: 14px;
+    }
+}
+
+/* 新增載入動畫 */
+.fade-enter {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+/* 平板設備優化 */
+@media (max-width: 768px) {
+    .score-container {
+        grid-template-columns: 1fr;
+    }
+
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .navigation-buttons {
+        justify-content: center;
+    }
+}
+
+/* 手機設備優化 */
+@media (max-width: 480px) {
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .result-suggestions {
+        gap: 10px;
+    }
+
+    .suggestion-item {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .suggestion-icon {
+        font-size: clamp(18px, 4vw, 20px);
+    }
+
+    .result-note {
+        font-size: clamp(12px, 2vw, 13px);
+    }
+}
+
+/* 橫向模式優化 */
+@media (max-height: 600px) and (orientation: landscape) {
+    body {
+        padding-top: 40px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .card-container {
+        padding: 15px;
+    }
+
+    .features {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    #current-question {
+        margin: 15px 0;
+    }
+
+    .options {
+        gap: 8px;
+    }
+
+    .score-container {
+        grid-template-columns: 1fr 2fr;
+    }
+}
+
+/* 確保最小可讀性 */
+@media (max-width: 320px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    h1, .test-title {
+        font-size: 20px;
+    }
+
+    .option {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .score {
+        font-size: 32px;
+    }
+
+    .suggestion-item {
+        font-size: 13px;
+    }
+}
+
+/* 動畫效果優化 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* 確保所有元素都使用 border-box */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 容器基礎設置 */
+.container {
+    position: relative;
+    width: min(90%, 800px);
+    margin: 0 auto;
+    padding: clamp(15px, 3vw, 30px);
+}
+
+/* 特性區塊網格化設計 */
+.features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(15px, 3vw, 30px);
+    margin: clamp(30px, 5vw, 50px) auto;
+    width: 100%;
+    max-width: 800px;
+}
+
+.feature {
+    padding: clamp(15px, 3vw, 25px);
+    background: var(--background-color);
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+    width: 100%;
+}
+
+/* 寬螢幕顯示三列 */
+@media (min-width: 768px) {
+    .features {
+        grid-template-columns: repeat(3, 1fr);
     }
 } 
