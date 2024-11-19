@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>台灣人人際互動量表</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon/favicon.svg">
+    <link rel="icon" type="image/png" href="../favicon/favicon.png">
+    <link rel="apple-touch-icon" href="../favicon/apple-touch-icon.png">
+    <link rel="manifest" href="../favicon/site.webmanifest">
+    <link rel="stylesheet" href="../common.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <a href="/" class="site-logo">
+                <svg class="logo-svg" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <style>
+                        .circle {
+                            transform-origin: center;
+                            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                        }
+                        .site-logo:hover .circle-1 {
+                            transform: translate(-2px, -2px);
+                        }
+                        .site-logo:hover .circle-2 {
+                            transform: translate(2px, -2px);
+                        }
+                        .site-logo:hover .circle-3 {
+                            transform: translate(0, 2px);
+                        }
+                    </style>
+                    <g id="logo">
+                        <circle class="circle circle-1" cx="16" cy="16" r="12" fill="#A17A69" fill-opacity="0.9"/>
+                        <circle class="circle circle-2" cx="24" cy="16" r="12" fill="#D4B2A7" fill-opacity="0.9"/>
+                        <circle class="circle circle-3" cx="20" cy="22" r="12" fill="#8B6355" fill-opacity="0.9"/>
+                    </g>
+                </svg>
+                <span class="logo-text">雲端心理測驗平台</span>
+            </a>
+            <nav class="site-nav">
+                <a href="/" class="nav-link">首頁</a>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <a href="index.html" class="close-button">×</a>
+        <h1>台灣人人際互動量表</h1>
+        <div id="progress-bar">
+            <div id="progress"></div>
+            <span id="question-counter">題目 0/37</span>
+        </div>
+        <div id="question-container">
+            <div id="current-question"></div>
+            <div class="navigation-buttons">
+                <button id="prev-button" class="nav-button" style="display: none;">上一題</button>
+            </div>
+            <div class="options">
+                <button class="option" data-value="1">幾乎不會如此</button>
+                <button class="option" data-value="2">很少如此</button>
+                <button class="option" data-value="3">有時如此</button>
+                <button class="option" data-value="4">常常如此</button>
+                <button class="option" data-value="5">總是如此</button>
+            </div>
+        </div>
+        <div id="results" style="display: none;"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+:root {
+    --primary-color: #A17A69;     /* 暖棕色 */
+    --secondary-color: #D4B2A7;   /* 淺暖棕 */
+    --background-color: #FAF6F3;  /* 米白色 */
+    --text-color: #2C1810;        /* 深棕色 */
+    --hover-color: #8B6355;       /* 深暖棕 */
+    --progress-bg: #E8E0DC;       /* 淺米色 */
+    --container-width: min(90%, 800px);
+    --font-size-base: clamp(16px, 3vw, 18px);
+    --spacing-base: clamp(20px, 4vw, 30px);
+}
+
+body {
+    padding-top: 60px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    position: relative;
+    width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-base);
+}
+
+h1 {
+    font-size: clamp(24px, 5vw, 32px);
+    margin-bottom: var(--spacing-base);
+    text-align: center;
+    font-weight: 600;
+}
+
+#progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: var(--progress-bg);
+    border-radius: 3px;
+    margin: 30px 0;
+    position: relative;
+}
+
+#progress {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#question-counter {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    font-size: 14px;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+#current-question {
+    font-size: clamp(18px, 3.5vw, 24px);
+    line-height: 1.6;
+    margin: 40px auto;
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 600;
+    padding: 30px 40px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    max-width: 600px;
+    border: 1px solid rgba(161, 122, 105, 0.1);
+}
+
+@media (max-width: 480px) {
+    #current-question {
+        font-size: 18px;
+        padding: 20px;
+        margin: 30px auto;
+    }
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: var(--spacing-base);
+}
+
+.option {
+    width: 100%;
+    padding: clamp(12px, 3vw, 16px);
+    font-size: var(--font-size-base);
+    min-height: 44px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    color: var(--text-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.option:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.option:active {
+    transform: translateY(0);
+}
+
+.option.selected {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: transparent;
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.close-button:hover {
+    background-color: var(--hover-color);
+    transform: scale(1.1);
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .option {
+        padding: 14px;
+        margin-bottom: 5px;
+    }
+
+    .close-button {
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+}
+
+/* 上一題按鈕樣式 */
+.nav-button {
+    padding: clamp(10px, 2vw, 12px) clamp(20px, 3vw, 24px);
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: clamp(14px, 2.5vw, 16px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-button:active {
+    transform: translateY(0);
+}
+
+/* 重新測驗按鈕樣式 */
+.retake-btn {
+    display: block;
+    padding: clamp(12px, 3vw, 16px) clamp(24px, 5vw, 32px);
+    font-size: clamp(16px, 3vw, 18px);
+    margin: var(--spacing-base) auto;
+    min-width: 150px;
+    font-weight: 500;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.retake-btn:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.retake-btn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+    .nav-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    .retake-btn {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+}
+
+/* 結果容器樣式 */
+.scores-container {
+    background: white;
+    border-radius: 24px;
+    padding: clamp(25px, 5vw, 40px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.scores-container h2 {
+    font-size: clamp(24px, 4vw, 32px);
+    color: var(--text-color);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* 分數顯示區域 */
+.score-item {
+    margin-bottom: 30px;
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.score-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.dimension-name {
+    font-size: clamp(16px, 3vw, 18px);
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.score-value {
+    font-size: clamp(18px, 3.5vw, 22px);
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.score-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(161, 122, 105, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.score-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 結果解釋區域 */
+.result-interpretation {
+    background-color: white;
+    border: 1px solid rgba(161, 122, 105, 0.2);
+    border-radius: 16px;
+    padding: clamp(20px, 4vw, 30px);
+    margin: 30px 0;
+}
+
+.result-interpretation h3 {
+    font-size: clamp(20px, 3.5vw, 24px);
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.result-interpretation p {
+    font-size: clamp(15px, 2.5vw, 17px);
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 15px;
+}
+
+.result-interpretation strong {
+    color: #E53935;  /* 警示文字使用紅色 */
+    font-weight: 600;
+}
+
+/* 求助資訊區域 */
+.help-resources {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(161, 122, 105, 0.1);
+    border-radius: 12px;
+}
+
+.help-resources h4 {
+    font-size: clamp(16px, 2.5vw, 18px);
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.help-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: clamp(14px, 2.5vw, 16px);
+}
+
+.help-line-number {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* 引用說明文字 */
+.citation {
+    font-size: clamp(13px, 2vw, 14px);
+    color: var(--text-color);
+    opacity: 0.8;
+    text-align: center;
+    margin-top: 25px;
+    line-height: 1.6;
+}
+
+/* 確保 header 的 z-index 更高 */
+.site-header {
+    /* 保持原有樣式 */
+    z-index: 1000;  /* header 應該要有最高的 z-index */
+} 

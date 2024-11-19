@@ -1,0 +1,471 @@
+:root {
+    --primary-color: #A17A69;     /* 暖棕色 */
+    --secondary-color: #D4B2A7;   /* 淺暖棕 */
+    --background-color: #FAF6F3;  /* 米白色 */
+    --text-color: #2C1810;        /* 深棕色 */
+    --hover-color: #8B6355;       /* 深暖棕 */
+    --progress-bg: #E8E0DC;       /* 淺米色 */
+    --container-width: min(90%, 800px);
+    --font-size-base: clamp(16px, 3vw, 18px);
+    --spacing-base: clamp(20px, 4vw, 30px);
+}
+
+body {
+    padding-top: 60px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    position: relative;
+    width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-base);
+}
+
+h1 {
+    font-size: clamp(24px, 5vw, 32px);
+    margin-bottom: var(--spacing-base);
+    text-align: center;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: clamp(20px, 4vw, 28px);
+    margin-bottom: calc(var(--spacing-base) * 0.8);
+}
+
+#progress-bar {
+    width: 100%;
+    height: 6px;  /* 更細的進度條 */
+    background-color: var(--progress-bg);
+    border-radius: 3px;
+    margin: 30px 0;
+    position: relative;
+}
+
+#progress {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#question-counter {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    font-size: 14px;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+#current-question {
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-base);
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 0 20px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: var(--spacing-base);
+}
+
+.option {
+    width: 100%;
+    padding: clamp(12px, 3vw, 16px);
+    font-size: var(--font-size-base);
+    min-height: 44px; /* 確保觸控區域足夠大 */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    color: var(--text-color);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.option:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.option:active {
+    transform: translateY(0);
+}
+
+.option.selected {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: transparent;
+}
+
+/* 結果頁面樣式 */
+.scores-container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+}
+
+.score-item {
+    margin-bottom: clamp(15px, 4vw, 25px);
+}
+
+.score-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.dimension-name {
+    font-size: clamp(15px, 3.5vw, 17px);
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.score-value {
+    font-size: clamp(15px, 3.5vw, 17px);
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.score-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: var(--progress-bg);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.score-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.retake-btn {
+    display: block;
+    padding: clamp(12px, 3vw, 16px) clamp(20px, 4vw, 30px);
+    font-size: clamp(16px, 3vw, 18px);
+    margin: var(--spacing-base) auto;
+    display: block;
+    min-width: 150px;
+    font-weight: 500;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.retake-btn:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.retake-btn:active {
+    transform: translateY(0);
+}
+
+/* 添加響應式設計 */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    #current-question {
+        font-size: 20px;
+        margin: 40px 0;
+    }
+
+    .option {
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+}
+
+.citation {
+    font-size: clamp(12px, 2.5vw, 14px);
+    line-height: 1.6;
+    margin-top: var(--spacing-base);
+    max-width: 700px;
+    padding: 0 20px;
+    text-align: center;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .citation {
+        font-size: 12px;
+        padding: 0 15px;
+    }
+}
+
+/* 基礎響應式設計 */
+:root {
+    --container-width: min(90%, 800px);
+    --font-size-base: clamp(16px, 3vw, 18px);
+    --spacing-base: clamp(20px, 4vw, 30px);
+}
+
+.container {
+    width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-base);
+}
+
+/* 標題樣式 */
+h1 {
+    font-size: clamp(24px, 5vw, 32px);
+    margin-bottom: var(--spacing-base);
+    text-align: center;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: clamp(20px, 4vw, 28px);
+    margin-bottom: calc(var(--spacing-base) * 0.8);
+}
+
+/* 選項按鈕樣式 */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: var(--spacing-base);
+}
+
+.option {
+    width: 100%;
+    padding: clamp(12px, 3vw, 16px);
+    font-size: var(--font-size-base);
+    min-height: 44px; /* 確保觸控區域足夠大 */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    color: var(--text-color);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.option:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.option:active {
+    transform: translateY(0);
+}
+
+.option.selected {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: transparent;
+}
+
+/* 問題文字樣式 */
+#current-question {
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-base);
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 0 20px;
+}
+
+/* 結果頁面樣式優化 */
+.dimension-explanation {
+    padding: clamp(15px, 3vw, 25px);
+}
+
+.dimension-explanation h4 {
+    font-size: clamp(16px, 3.5vw, 20px);
+}
+
+.dimension-explanation p {
+    font-size: clamp(14px, 3vw, 16px);
+}
+
+.score-item {
+    margin-bottom: clamp(15px, 4vw, 25px);
+}
+
+.dimension-name, .score-value {
+    font-size: clamp(15px, 3.5vw, 17px);
+}
+
+/* 所有向度說明卡片的響應式設計 */
+.dimension-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(15px, 3vw, 20px);
+}
+
+.dimension-card {
+    padding: clamp(15px, 3vw, 20px);
+}
+
+.dimension-card h4 {
+    font-size: clamp(16px, 3.5vw, 18px);
+    margin-bottom: clamp(8px, 2vw, 10px);
+}
+
+.dimension-card p {
+    font-size: clamp(14px, 3vw, 15px);
+    line-height: 1.6;
+}
+
+/* 引用說明文字 */
+.citation {
+    font-size: clamp(12px, 2.5vw, 14px);
+    line-height: 1.6;
+    margin-top: var(--spacing-base);
+    max-width: 700px;
+    padding: 0 20px;
+    text-align: center;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+/* 重新測驗按鈕 */
+.retake-btn {
+    padding: clamp(12px, 3vw, 16px) clamp(20px, 4vw, 30px);
+    font-size: clamp(16px, 3vw, 18px);
+    margin: var(--spacing-base) auto;
+    display: block;
+    min-width: 150px;
+    font-weight: 500;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 確保在小螢幕上有足夠的間距 */
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .options {
+        gap: 10px;
+    }
+    
+    .option {
+        padding: 14px;
+        margin-bottom: 5px;
+    }
+}
+
+/* 添加導航按鈕的樣式 */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.nav-button {
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.nav-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* 添加關閉按鈕樣式 */
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.close-button:hover {
+    background-color: var(--hover-color);
+    transform: scale(1.1);
+}
+
+/* 確保容器有相對定位以便定位關閉按鈕 */
+.container {
+    position: relative;
+    width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-base);
+}
+
+/* 在手機版上調整關閉按鈕的位置和大小 */
+@media (max-width: 768px) {
+    .close-button {
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+}
