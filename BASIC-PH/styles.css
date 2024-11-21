@@ -221,10 +221,17 @@ h1, h2, .test-title {
 }
 
 .profession-title {
-    font-size: clamp(24px, 5vw, 32px);
+    font-size: clamp(28px, 5vw, 36px);
     font-weight: 700;
     color: var(--primary-color);
-    margin: 10px 0;
+    margin: 10px 0 5px;
+}
+
+.profession-subtitle {
+    font-size: clamp(16px, 3vw, 20px);
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-bottom: 20px;
 }
 
 .profession-description {
@@ -446,5 +453,39 @@ h1, h2, .test-title {
     .navigation-buttons {
         margin-top: 20px;
         padding: 0 10px;
+    }
+}
+
+/* 職業標題區塊樣式 */
+.profession-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.profession-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.profession-titles {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+/* 響應式調整 */
+@media (max-width: 480px) {
+    .profession-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .profession-header {
+        gap: 10px;
     }
 } 
