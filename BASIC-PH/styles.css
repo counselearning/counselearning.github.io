@@ -1,0 +1,450 @@
+/* 基本變數設置 */
+:root {
+    --primary-color: #A17A69;
+    --secondary-color: #D4B2A7;
+    --background-color: #FAF6F3;
+    --text-color: #2C1810;
+    --hover-color: #8B6355;
+}
+
+/* 基本樣式 */
+body {
+    padding-top: 60px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    position: relative;
+    width: min(90%, 800px);
+    margin: 0 auto;
+    padding: clamp(15px, 3vw, 30px);
+}
+
+/* 卡片容器樣式 */
+.card-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#intro.card-container {
+    background: white;
+    padding: clamp(30px, 5vw, 50px);
+    border-radius: 24px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+}
+
+#test.card-container {
+    background: var(--background-color);
+    padding: clamp(30px, 5vw, 50px);
+    border-radius: 24px;
+    box-shadow: none;
+}
+
+#result.card-container {
+    background: var(--background-color);
+    padding: clamp(30px, 5vw, 50px);
+    border-radius: 24px;
+    box-shadow: none;
+}
+
+/* 標題和描述 */
+h1, h2, .test-title {
+    font-size: clamp(22px, 4vw, 32px);
+    margin-bottom: clamp(20px, 4vw, 40px);
+    color: var(--text-color);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.description {
+    font-size: clamp(15px, 2.5vw, 18px);
+    line-height: 1.6;
+    color: var(--text-color);
+    margin: 0 auto clamp(30px, 5vw, 50px);
+    max-width: min(100%, 600px);
+}
+
+/* 特性區塊 */
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(15px, 3vw, 30px);
+    margin: clamp(30px, 5vw, 50px) auto;
+    width: 100%;
+}
+
+.feature {
+    padding: clamp(15px, 3vw, 25px);
+    background: var(--background-color);
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: clamp(24px, 4vw, 32px);
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* 問題容器 */
+#current-question {
+    background: var(--background-color);
+    padding: clamp(15px, 3vw, 30px);
+    border-radius: 16px;
+    box-shadow: none;
+    font-size: clamp(16px, 3vw, 22px);
+    line-height: 1.5;
+    margin: clamp(20px, 4vw, 40px) 0;
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+/* 選項樣式 */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+    transition: opacity 0.5s ease;
+}
+
+.option {
+    width: 100%;
+    padding: 16px 20px;
+    background: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.option:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.option.selected {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* 進度條 */
+.progress-container {
+    width: 100%;
+    margin: 40px 0;
+    position: relative;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--secondary-color);
+    border-radius: 4px;
+    margin-top: 30px;
+    position: relative;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.question-counter {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    font-size: 14px;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+/* 按鈕樣式 */
+.start-btn, .primary-button {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: clamp(12px, 3vw, 16px);
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: clamp(16px, 3vw, 18px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.start-btn:hover, .primary-button:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 結果頁面樣式 */
+.profession-wrapper {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.profession-label {
+    font-size: 16px;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-bottom: 10px;
+}
+
+.profession-title {
+    font-size: clamp(24px, 5vw, 32px);
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 10px 0;
+}
+
+.profession-description {
+    font-size: clamp(15px, 2.5vw, 16px);
+    line-height: 1.6;
+    color: var(--text-color);
+    margin: 15px 0;
+    text-align: left;
+}
+
+.examples {
+    font-size: clamp(14px, 2.5vw, 15px);
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-top: 10px;
+    text-align: left;
+}
+
+/* 引用來源 */
+.citation, .result-note {
+    font-size: 14px;
+    color: var(--text-color);
+    opacity: 0.7;
+    margin-top: 20px;
+}
+
+/* 關閉按鈕 */
+.close-button {
+    position: absolute;
+    top: clamp(15px, 3vw, 20px);
+    right: clamp(15px, 3vw, 20px);
+    width: clamp(32px, 6vw, 40px);
+    height: clamp(32px, 6vw, 40px);
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(20px, 4vw, 24px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.close-button:hover {
+    background-color: var(--hover-color);
+    transform: scale(1.1);
+}
+
+/* 響應式設計調整 */
+@media (max-width: 768px) {
+    .container {
+        width: min(95%, 800px);
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .card-container {
+        padding: clamp(20px, 4vw, 30px);
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .profession-wrapper {
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .option {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .score-container {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .card-container {
+        padding: 15px;
+        margin: 0;
+    }
+
+    #current-question {
+        padding: 15px;
+        font-size: 16px;
+        margin: 15px 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .options {
+        width: 100%;
+        padding: 0;
+        margin: 15px 0;
+    }
+
+    .option {
+        padding: 12px 16px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .profession-title {
+        font-size: 20px;
+    }
+
+    .profession-description {
+        font-size: 14px;
+    }
+
+    .description {
+        padding: 0 10px;
+    }
+
+    .start-btn, .primary-button {
+        width: 90%;
+        max-width: none;
+    }
+}
+
+/* 確保所有元素使用 border-box */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 防止文字溢出 */
+.profession-description p,
+.examples,
+.description,
+#current-question,
+.option {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* 隱藏元素 */
+.hidden {
+    display: none;
+}
+
+/* 測驗頁面和結果頁面初始狀態 */
+#test, #result {
+    display: none;
+}
+
+/* 添加淡入動畫 */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 上一步按鈕樣式 */
+.secondary-button {
+    padding: clamp(10px, 2vw, 12px) clamp(20px, 3vw, 24px);
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: clamp(14px, 2.5vw, 16px);
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.secondary-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.secondary-button:active {
+    transform: translateY(0);
+}
+
+/* 導航按鈕容器 */
+.navigation-buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 24px;
+    padding: 0 clamp(10px, 2vw, 20px);
+}
+
+/* 響應式調整 */
+@media (max-width: 480px) {
+    .secondary-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    .navigation-buttons {
+        margin-top: 20px;
+        padding: 0 10px;
+    }
+} 
