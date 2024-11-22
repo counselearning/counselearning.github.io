@@ -33,7 +33,7 @@
     padding: clamp(8px, 2vw, 12px) clamp(15px, 3vw, 24px);
     border: none;
     border-radius: 12px;
-    background: white;
+    background: #FAF6F3;
     color: var(--text-color);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -48,7 +48,7 @@
 
 .category-tab.active {
     background: var(--primary-color);
-    color: white;
+    color: #FAF6F3;
 }
 
 /* 搜尋框 */

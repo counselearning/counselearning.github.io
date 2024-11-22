@@ -1,24 +1,31 @@
 {
   "posts": [
     {
-      "id": "mental-health-stress",
-      "title": "壓力與身心健康：認識與調適",
-      "description": "探討日常壓力對身心的影響，以及實用的壓力調適方法。",
-      "category": "mental-health",
-      "date": "2024-11-22",
-      "author": "系統管理員-小C",
-      "tags": ["壓力管理", "身心健康", "自我照顧"],
-      "coverImage": "images/stress-management.svg"
-    },
-    {
       "id": "psychological-tests-intro",
       "title": "心理測驗的科學基礎",
-      "description": "了解心理測驗的理論基礎、信效度概念與實務應用。",
-      "category": "psychological-tests",
       "date": "2024-11-22",
+      "category": "psychological-tests",
       "author": "系統管理員-小C",
-      "tags": ["心理測驗", "心理評估", "測驗理論"],
-      "coverImage": "images/psych-test.svg"
+      "description": "了解心理測驗的理論基礎、信效度概念與實務應用。",
+      "url": "/articles/posts/psychological-tests-intro.html"
+    },
+    {
+      "id": "social-media-anxiety",
+      "title": "數位時代的心理健康：如何避免社群媒體焦慮",
+      "date": "2024-03-20",
+      "category": "mental-health",
+      "author": "系統管理員-小C",
+      "description": "探討社群媒體對心理健康的影響，並提供實用的建議。",
+      "url": "/articles/posts/social-media-anxiety.html"
+    },
+    {
+      "id": "mental-health-stress",
+      "title": "壓力與身心健康：認識與調適",
+      "date": "2024-11-22",
+      "category": "mental-health",
+      "author": "系統管理員-小C",
+      "description": "探討日常壓力對身心的影響，以及實用的壓力調適方法。",
+      "url": "/articles/posts/mental-health-stress.html"
     }
   ]
 } 
