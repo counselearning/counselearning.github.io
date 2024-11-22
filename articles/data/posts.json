@@ -7,7 +7,8 @@
       "category": "psychological-tests",
       "author": "系統管理員-小C",
       "description": "了解心理測驗的理論基礎、信效度概念與實務應用。",
-      "url": "/articles/posts/psychological-tests-intro.html"
+      "url": "/articles/posts/psychological-tests-intro.html",
+      "coverImage": "/articles/images/psych-test.webp"
     },
     {
       "id": "social-media-anxiety",
@@ -16,7 +17,8 @@
       "category": "mental-health",
       "author": "系統管理員-小C",
       "description": "探討社群媒體對心理健康的影響，並提供實用的建議。",
-      "url": "/articles/posts/social-media-anxiety.html"
+      "url": "/articles/posts/social-media-anxiety.html",
+      "coverImage": "/articles/images/social-media-anxiety.webp"
     },
     {
       "id": "mental-health-stress",
@@ -25,7 +27,8 @@
       "category": "mental-health",
       "author": "系統管理員-小C",
       "description": "探討日常壓力對身心的影響，以及實用的壓力調適方法。",
-      "url": "/articles/posts/mental-health-stress.html"
+      "url": "/articles/posts/mental-health-stress.html",
+      "coverImage": "/articles/images/stress-management.webp"
     }
   ]
 } 
