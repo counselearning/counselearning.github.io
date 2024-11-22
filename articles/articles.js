@@ -88,7 +88,14 @@ class ArticlesManager {
 
         this.articlesGrid.innerHTML = articles.map(article => `
             <a href="posts/${article.id}.html" class="article-card">
-                <img class="article-cover" src="${article.coverImage}" alt="${article.title}的封面圖片">
+                <div class="article-cover-wrapper">
+                    <img class="article-cover" 
+                        src="${article.coverImage}" 
+                        alt="${article.title}的封面圖片"
+                        loading="lazy"
+                        width="1200"
+                        height="630">
+                </div>
                 <div class="article-content">
                     <div class="article-category">${this.getCategoryName(article.category)}</div>
                     <h2 class="article-title">${article.title}</h2>
