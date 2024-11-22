@@ -6,9 +6,9 @@
       "description": "探討日常壓力對身心的影響，以及實用的壓力調適方法。",
       "category": "mental-health",
       "date": "2024-11-22",
-      "author": "Yi-hong Lee",
+      "author": "系統管理員-小C",
       "tags": ["壓力管理", "身心健康", "自我照顧"],
-      "coverImage": "images/stress-management.jpg"
+      "coverImage": "images/stress-management.svg"
     },
     {
       "id": "psychological-tests-intro",
@@ -16,9 +16,9 @@
       "description": "了解心理測驗的理論基礎、信效度概念與實務應用。",
       "category": "psychological-tests",
       "date": "2024-11-22",
-      "author": "Yi-hong Lee",
+      "author": "系統管理員-小C",
       "tags": ["心理測驗", "心理評估", "測驗理論"],
-      "coverImage": "images/psych-test.jpg"
+      "coverImage": "images/psych-test.svg"
     }
   ]
 } 
