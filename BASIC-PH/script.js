@@ -54,7 +54,7 @@ class AdventureTest {
             {
                 text: "即使遇到許多挫折與挑戰，他/她...",
                 options: [
-                    { text: "仍然富有活力", dimension: "PH" },
+                    { text: "仍然精力充沛、體力十足", dimension: "PH" },
                     { text: "仍然試圖從環境中找到解決方式", dimension: "S" },
                     { text: "仍然保持心態穩定", dimension: "A" },
                     { text: "仍然努力找出問題所在", dimension: "C" },
@@ -70,7 +70,7 @@ class AdventureTest {
                     { text: "只想回家好好睡一覺，結束了這次冒險", dimension: "PH" },
                     { text: "想著如何避免危機再度發生，結束了這次冒險", dimension: "C" },
                     { text: "保護了許多人，結束了這次冒險", dimension: "B" },
-                    { text: "在冒險中覺醒了獨特的新技能，結束了這次冒險", dimension: "I" }
+                    { text: "在冒險中發現了獨特的新技能，結束了這次冒險", dimension: "I" }
                 ]
             }
         ];
@@ -113,28 +113,6 @@ class AdventureTest {
                 description: '你具有強大的行動力，善於通過身體活動來釋放壓力。面對挑戰時，你會起身行動，用實際行動解決問題。在壓力下，你會透過吃／喝／睡或是性來紓壓。',
                 examples: '#心情不好吃東西　　#吃完東西去睡覺　　#一天一杯手搖飲'
             }
-        };
-
-        // 職業圖示
-        this.professionIcons = {
-            'B': `<svg class="profession-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 3L14.5 8.5L20.5 9.5L16 13.5L17.5 19.5L12 16.5L6.5 19.5L8 13.5L3.5 9.5L9.5 8.5L12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>`, // 聖騎士：星形徽章
-            'A': `<svg class="profession-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14M15 9H15.01M9 9H9.01M3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>`, // 吟遊詩人：笑臉
-            'S': `<svg class="profession-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3M12 21V17M12 3V7M17 12H21M3 12H7M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>`, // 商人：人群連結圖示
-            'I': `<svg class="profession-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 3C12 3 8 7 8 11C8 13.2091 9.79086 15 12 15C14.2091 15 16 13.2091 16 11C16 7 12 3 12 3ZM12 3C12 3 16 7 16 11M12 3C12 3 8 7 8 11M12 15V21M8 18H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>`, // 魔法師：燈泡/創意圖示
-            'C': `<svg class="profession-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5M17.6859 17.69L18.5 18.5M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>`, // 賢者：智慧之眼
-            'PH': `<svg class="profession-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 4C4.79086 4 3 5.79086 3 8C3 9.86384 4.27477 11.4299 6 11.874V20H8V11.874C9.72523 11.4299 11 9.86384 11 8C11 5.79086 9.20914 4 7 4ZM7 4V2M17 4C14.7909 4 13 5.79086 13 8C13 9.86384 14.2748 11.4299 16 11.874V20H18V11.874C19.7252 11.4299 21 9.86384 21 8C21 5.79086 19.2091 4 17 4ZM17 4V2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>` // 戰士：二頭肌手臂
         };
     }
 
@@ -262,16 +240,13 @@ class AdventureTest {
 
         this.resultSection.innerHTML = `
             <a href="index.html" class="close-button">×</a>
-            <h2>你的冒險者身分</h2>
+            <h2>你的冒險者復原力身分</h2>
             <div class="score-container">
                 <div class="profession-wrapper primary">
                     <div class="profession-label">主職業</div>
-                    <div class="profession-header">
-                        ${this.professionIcons[primary]}
-                        <div class="profession-titles">
-                            <div class="profession-title">${primaryProf.title}</div>
-                            <div class="profession-subtitle">${primaryProf.subTitle}</div>
-                        </div>
+                    <div class="profession-titles">
+                        <div class="profession-title">${primaryProf.title}</div>
+                        <div class="profession-subtitle">${primaryProf.subTitle}</div>
                     </div>
                     <div class="profession-description">
                         <p>${primaryProf.description}</p>
@@ -280,12 +255,9 @@ class AdventureTest {
                 </div>
                 <div class="profession-wrapper secondary">
                     <div class="profession-label">副職業</div>
-                    <div class="profession-header">
-                        ${this.professionIcons[secondary]}
-                        <div class="profession-titles">
-                            <div class="profession-title">${secondaryProf.title}</div>
-                            <div class="profession-subtitle">${secondaryProf.subTitle}</div>
-                        </div>
+                    <div class="profession-titles">
+                        <div class="profession-title">${secondaryProf.title}</div>
+                        <div class="profession-subtitle">${secondaryProf.subTitle}</div>
                     </div>
                     <div class="profession-description">
                         <p>${secondaryProf.description}</p>

@@ -225,6 +225,7 @@ h1, h2, .test-title {
     font-weight: 700;
     color: var(--primary-color);
     margin: 10px 0 5px;
+    text-align: center;
 }
 
 .profession-subtitle {
@@ -232,6 +233,7 @@ h1, h2, .test-title {
     color: var(--text-color);
     opacity: 0.8;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .profession-description {
@@ -464,28 +466,17 @@ h1, h2, .test-title {
     margin-bottom: 20px;
 }
 
-.profession-icon {
-    width: 40px;
-    height: 40px;
-    color: var(--primary-color);
-    flex-shrink: 0;
-}
-
 .profession-titles {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    width: 100%;
     gap: 5px;
 }
 
 /* 響應式調整 */
 @media (max-width: 480px) {
-    .profession-icon {
-        width: 32px;
-        height: 32px;
-    }
-    
-    .profession-header {
+    .profession-titles {
         gap: 10px;
     }
 } 
