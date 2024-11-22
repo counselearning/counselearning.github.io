@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>人際互動測驗</title>
-    <link rel="icon" type="image/svg+xml" href="../favicon/favicon.svg">
-    <link rel="icon" type="image/png" href="../favicon/favicon.png">
-    <link rel="apple-touch-icon" href="../favicon/apple-touch-icon.png">
-    <link rel="manifest" href="../favicon/site.webmanifest">
+    <title>文章專欄 | 雲端心理測驗平台</title>
+    <meta name="description" content="探索心理健康、心理測驗與研究趨勢的專業文章。提供最新的心理學研究、測驗理論與實務應用。">
+    <meta name="keywords" content="心理健康,心理測驗,研究趨勢,心理學文章,心理諮商">
+    <link rel="canonical" href="https://counselearning.github.io/articles/">
     <link rel="stylesheet" href="../common.css">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="site-header">
@@ -41,39 +40,31 @@
             </a>
             <nav class="site-nav">
                 <a href="/" class="nav-link">首頁</a>
-                <a href="/articles/" class="nav-link">文章</a>
+                <a href="/articles/" class="nav-link active">文章</a>
             </nav>
         </div>
     </header>
+
     <div class="container">
-        <a href="../index.html" class="close-button">×</a>
-        <div class="content">
-            <h1>人際互動測驗</h1>
-            <p class="description">
-                這是一個幫助你了解自己溝通模式的測驗。測驗包含37個問題，請你依據自己的實際情況，選擇與題目描述最接近的選項。
-                <br><br>
-                完成後你將了解自己在九個不同溝通向度上的傾向。
-            </p>
-            <div class="features">
-                <div class="feature">
-                    <span class="feature-icon">⏱️</span>
-                    <p>測驗時間約5分鐘</p>
-                </div>
-                <div class="feature">
-                    <span class="feature-icon">📊</span>
-                    <p>獲得測驗解釋</p>
-                </div>
-                <div class="feature">
-                    <span class="feature-icon">🤝</span>
-                    <p>了解自己的溝通模式</p>
-                </div>
-            </div>
-            <a href="interpersonaltest.html" class="start-btn">開始測驗</a>
-            <div class="citation">
-                此量表出自顏欣怡, & 卓紋君。（2020）。Satir 溝通姿態之反思暨台灣人人際溝通量表之修訂。
-                中華心理衛生學刊，33(4)，381-415。
+        <div class="articles-header">
+            <h1>文章專欄</h1>
+            <div class="category-tabs">
+                <button class="category-tab active" data-category="all">全部文章</button>
+                <button class="category-tab" data-category="mental-health">心理健康</button>
+                <button class="category-tab" data-category="psychological-tests">心理測驗</button>
+                <button class="category-tab" data-category="research-trends">研究趨勢</button>
             </div>
         </div>
+
+        <div class="search-container">
+            <input type="text" id="searchArticles" placeholder="搜尋文章...">
+        </div>
+
+        <div class="articles-grid">
+            <!-- 文章卡片由 JavaScript 動態載入 -->
+        </div>
     </div>
+
+    <script src="articles.js"></script>
 </body>
 </html> 
