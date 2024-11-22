@@ -268,7 +268,7 @@ class AdventureTest {
             <button class="primary-button" onclick="location.reload()">重新測驗</button>
             <div class="result-note">
                 <p>註：本測驗結果僅供參考，每個人都可能同時具備多種特質。</p>
-                <p>資料來源：改編自 Mooli Lahad (2012)</p>
+                <p>此測驗由 Yi-hong Lee 改編自 Mooli Lahad (2012)</p>
             </div>
         `;
 
