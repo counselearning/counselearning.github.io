@@ -18,14 +18,14 @@ class ArticlesManager {
 
     bindEvents() {
         // 分類標籤點擊事件
-        this.categoryTabs.forEach(tab => {
+        this.categoryTabs?.forEach(tab => {
             tab.addEventListener('click', () => {
                 this.setActiveCategory(tab.dataset.category);
             });
         });
 
         // 搜尋輸入事件
-        this.searchInput.addEventListener('input', () => {
+        this.searchInput?.addEventListener('input', () => {
             this.searchTerm = this.searchInput.value.toLowerCase();
             this.filterAndDisplayArticles();
         });
@@ -33,21 +33,36 @@ class ArticlesManager {
 
     async loadArticles() {
         try {
-            const response = await fetch('../data/posts.json');
-            const articles = await response.json();
+            // 修正 fetch 路徑，使用相對路徑
+            const response = await fetch('./data/posts.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            this.articles = data.posts;
             
             // 確保文章按日期從新到舊排序
-            articles.sort((a, b) => {
+            this.articles.sort((a, b) => {
                 return new Date(b.date) - new Date(a.date);
             });
 
             // 渲染文章列表
-            this.renderArticles(articles);
+            this.filterAndDisplayArticles();
             
-            // 更新文章導航
-            this.updateArticleNavigation(articles);
+            // 如果在文章頁面，則更新文章導航
+            if (window.location.pathname.includes('/posts/')) {
+                this.updateArticleNavigation();
+            }
         } catch (error) {
             console.error('Error loading articles:', error);
+            // 顯示錯誤訊息給使用者
+            if (this.articlesGrid) {
+                this.articlesGrid.innerHTML = `
+                    <div class="error-message">
+                        <p>抱歉，載入文章時發生錯誤。請稍後再試。</p>
+                    </div>
+                `;
+            }
         }
     }
 
@@ -55,7 +70,7 @@ class ArticlesManager {
         this.currentCategory = category;
         
         // 更新分類標籤樣式
-        this.categoryTabs.forEach(tab => {
+        this.categoryTabs?.forEach(tab => {
             tab.classList.toggle('active', tab.dataset.category === category);
         });
         
@@ -63,13 +78,18 @@ class ArticlesManager {
     }
 
     filterAndDisplayArticles() {
+        if (!this.articlesGrid) return;
+
         let filteredArticles = this.articles;
 
         // 根據分類篩選
         if (this.currentCategory !== 'all') {
-            filteredArticles = filteredArticles.filter(article => 
-                article.category === this.currentCategory
-            );
+            filteredArticles = filteredArticles.filter(article => {
+                if (article.categories) {
+                    return article.categories.includes(this.currentCategory);
+                }
+                return article.category === this.currentCategory;
+            });
         }
 
         // 根據搜尋詞篩選
@@ -77,7 +97,9 @@ class ArticlesManager {
             filteredArticles = filteredArticles.filter(article => 
                 article.title.toLowerCase().includes(this.searchTerm) ||
                 article.description.toLowerCase().includes(this.searchTerm) ||
-                article.tags.some(tag => tag.toLowerCase().includes(this.searchTerm))
+                (article.tags && article.tags.some(tag => 
+                    tag.toLowerCase().includes(this.searchTerm)
+                ))
             );
         }
 
@@ -85,6 +107,8 @@ class ArticlesManager {
     }
 
     displayArticles(articles) {
+        if (!this.articlesGrid) return;
+
         if (articles.length === 0) {
             this.articlesGrid.innerHTML = `
                 <div class="no-results">
@@ -95,14 +119,12 @@ class ArticlesManager {
         }
 
         this.articlesGrid.innerHTML = articles.map(article => `
-            <a href="posts/${article.id}.html" class="article-card">
+            <a href="${article.url}" class="article-card">
                 <div class="article-cover-wrapper">
                     <img class="article-cover" 
                         src="${article.coverImage}" 
                         alt="${article.title}的封面圖片"
-                        loading="lazy"
-                        width="1200"
-                        height="630">
+                        loading="lazy">
                 </div>
                 <div class="article-content">
                     <div class="article-category">${this.getCategoryName(article.category)}</div>
@@ -135,25 +157,23 @@ class ArticlesManager {
         });
     }
 
-    // 更新文章導航功能
-    updateArticleNavigation(articles) {
-        // 獲取當前文章的 URL
+    updateArticleNavigation() {
         const currentPath = window.location.pathname;
         const currentArticleId = currentPath.split('/').pop().replace('.html', '');
         
         // 找到當前文章在陣列中的索引
-        const currentIndex = articles.findIndex(article => article.id === currentArticleId);
+        const currentIndex = this.articles.findIndex(article => article.id === currentArticleId);
         
-        if (currentIndex === -1) return; // 如果找不到當前文章，直接返回
+        if (currentIndex === -1) return;
         
-        const prevArticle = articles[currentIndex - 1]; // 較新的文章
-        const nextArticle = articles[currentIndex + 1]; // 較舊的文章
+        const prevArticle = this.articles[currentIndex - 1];
+        const nextArticle = this.articles[currentIndex + 1];
         
         // 更新上一篇文章連結
         const prevNav = document.querySelector('.nav-prev');
         if (prevNav) {
             if (prevArticle) {
-                prevNav.href = `../posts/${prevArticle.id}.html`;
+                prevNav.href = prevArticle.url;
                 prevNav.querySelector('strong').textContent = prevArticle.title;
                 prevNav.style.visibility = 'visible';
             } else {
@@ -165,35 +185,13 @@ class ArticlesManager {
         const nextNav = document.querySelector('.nav-next');
         if (nextNav) {
             if (nextArticle) {
-                nextNav.href = `../posts/${nextArticle.id}.html`;
+                nextNav.href = nextArticle.url;
                 nextNav.querySelector('strong').textContent = nextArticle.title;
                 nextNav.style.visibility = 'visible';
             } else {
                 nextNav.style.visibility = 'hidden';
             }
         }
-    }
-
-    // 渲染文章列表
-    renderArticles(articles) {
-        const articleList = document.querySelector('.article-list');
-        if (!articleList) return;
-        
-        articleList.innerHTML = articles.map(article => `
-            <article class="article-card">
-                <a href="posts/${article.id}.html">
-                    <img src="${article.coverImage}" alt="${article.title}" class="article-cover">
-                    <div class="article-content">
-                        <h2>${article.title}</h2>
-                        <p class="article-description">${article.description}</p>
-                        <div class="article-meta">
-                            <span class="article-date">${this.formatDate(article.date)}</span>
-                            <span class="article-category">${article.category}</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-        `).join('');
     }
 }
 
