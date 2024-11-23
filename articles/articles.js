@@ -33,13 +33,21 @@ class ArticlesManager {
 
     async loadArticles() {
         try {
-            const response = await fetch('data/posts.json');
-            const data = await response.json();
-            this.articles = data.posts;
-            this.filterAndDisplayArticles();
+            const response = await fetch('../data/posts.json');
+            const articles = await response.json();
+            
+            // 確保文章按日期從新到舊排序
+            articles.sort((a, b) => {
+                return new Date(b.date) - new Date(a.date);
+            });
+
+            // 渲染文章列表
+            this.renderArticles(articles);
+            
+            // 更新文章導航
+            this.updateArticleNavigation(articles);
         } catch (error) {
-            console.error('載入文章失敗:', error);
-            this.articlesGrid.innerHTML = '<p class="error-message">載入文章時發生錯誤，請稍後再試。</p>';
+            console.error('Error loading articles:', error);
         }
     }
 
@@ -125,6 +133,67 @@ class ArticlesManager {
             month: 'long',
             day: 'numeric'
         });
+    }
+
+    // 更新文章導航功能
+    updateArticleNavigation(articles) {
+        // 獲取當前文章的 URL
+        const currentPath = window.location.pathname;
+        const currentArticleId = currentPath.split('/').pop().replace('.html', '');
+        
+        // 找到當前文章在陣列中的索引
+        const currentIndex = articles.findIndex(article => article.id === currentArticleId);
+        
+        if (currentIndex === -1) return; // 如果找不到當前文章，直接返回
+        
+        const prevArticle = articles[currentIndex - 1]; // 較新的文章
+        const nextArticle = articles[currentIndex + 1]; // 較舊的文章
+        
+        // 更新上一篇文章連結
+        const prevNav = document.querySelector('.nav-prev');
+        if (prevNav) {
+            if (prevArticle) {
+                prevNav.href = `../posts/${prevArticle.id}.html`;
+                prevNav.querySelector('strong').textContent = prevArticle.title;
+                prevNav.style.visibility = 'visible';
+            } else {
+                prevNav.style.visibility = 'hidden';
+            }
+        }
+        
+        // 更新下一篇文章連結
+        const nextNav = document.querySelector('.nav-next');
+        if (nextNav) {
+            if (nextArticle) {
+                nextNav.href = `../posts/${nextArticle.id}.html`;
+                nextNav.querySelector('strong').textContent = nextArticle.title;
+                nextNav.style.visibility = 'visible';
+            } else {
+                nextNav.style.visibility = 'hidden';
+            }
+        }
+    }
+
+    // 渲染文章列表
+    renderArticles(articles) {
+        const articleList = document.querySelector('.article-list');
+        if (!articleList) return;
+        
+        articleList.innerHTML = articles.map(article => `
+            <article class="article-card">
+                <a href="posts/${article.id}.html">
+                    <img src="${article.coverImage}" alt="${article.title}" class="article-cover">
+                    <div class="article-content">
+                        <h2>${article.title}</h2>
+                        <p class="article-description">${article.description}</p>
+                        <div class="article-meta">
+                            <span class="article-date">${this.formatDate(article.date)}</span>
+                            <span class="article-category">${article.category}</span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+        `).join('');
     }
 }
 

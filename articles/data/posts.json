@@ -1,9 +1,21 @@
 {
   "posts": [
     {
+      "id": "psychological-resilience",
+      "title": "心理韌性：壓力下的復原與成長",
+      "description": "探討心理韌性的本質、形成因素，以及如何在日常生活中培養這項重要能力，幫助讀者在面對挑戰時更具適應力。",
+      "category": "mental-health",
+      "categories": ["mental-health", "research-trends"],
+      "date": "2024-11-21",
+      "author": "系統管理員-阿宏",
+      "tags": ["心理韌性", "壓力管理", "心理健康", "自我成長", "情緒管理", "研究趨勢"],
+      "coverImage": "/articles/images/psychological-resilience-cover.webp",
+      "url": "/articles/posts/psychological-resilience.html"
+    },
+    {
       "id": "psychological-tests-intro",
       "title": "心理測驗的科學基礎",
-      "date": "2024-11-22",
+      "date": "2024-10-27",
       "category": "psychological-tests",
       "author": "系統管理員-小C",
       "description": "了解心理測驗的理論基礎、信效度概念與實務應用。",
@@ -13,7 +25,7 @@
     {
       "id": "social-media-anxiety",
       "title": "數位時代的心理健康：如何避免社群媒體焦慮",
-      "date": "2024-03-20",
+      "date": "2024-08-20",
       "category": "mental-health",
       "author": "系統管理員-小C",
       "description": "探討社群媒體對心理健康的影響，並提供實用的建議。",
@@ -23,7 +35,7 @@
     {
       "id": "mental-health-stress",
       "title": "壓力與身心健康：認識與調適",
-      "date": "2024-11-22",
+      "date": "2024-07-22",
       "category": "mental-health",
       "author": "系統管理員-小C",
       "description": "探討日常壓力對身心的影響，以及實用的壓力調適方法。",
