@@ -33,8 +33,11 @@ class ArticlesManager {
 
     async loadArticles() {
         try {
-            // 修正 fetch 路徑，使用相對路徑
-            const response = await fetch('./data/posts.json');
+            // 根據當前頁面位置調整路徑
+            const isArticlePage = window.location.pathname.includes('/posts/');
+            const jsonPath = isArticlePage ? '../data/posts.json' : 'data/posts.json';
+            
+            const response = await fetch(jsonPath);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -50,7 +53,7 @@ class ArticlesManager {
             this.filterAndDisplayArticles();
             
             // 如果在文章頁面，則更新文章導航
-            if (window.location.pathname.includes('/posts/')) {
+            if (isArticlePage) {
                 this.updateArticleNavigation();
             }
         } catch (error) {
@@ -60,6 +63,7 @@ class ArticlesManager {
                 this.articlesGrid.innerHTML = `
                     <div class="error-message">
                         <p>抱歉，載入文章時發生錯誤。請稍後再試。</p>
+                        <p class="error-details">錯誤詳情：${error.message}</p>
                     </div>
                 `;
             }
