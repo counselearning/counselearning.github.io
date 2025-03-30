@@ -95,12 +95,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 從 Base64 轉換成 Uint8Array
     function base64ToUint8Array(base64) {
-        const binaryString = atob(base64);
-        const bytes = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
+        try {
+            // 清理 Base64 字串
+            const cleanBase64 = base64
+                .replace(/[\n\r\s\t]/g, '') // 移除換行符和空白
+                .replace(/[^A-Za-z0-9+/=]/g, ''); // 只保留有效的 Base64 字元
+
+            // 確保字串長度是 4 的倍數
+            const padding = cleanBase64.length % 4;
+            const paddedBase64 = padding ? 
+                cleanBase64 + '='.repeat(4 - padding) : 
+                cleanBase64;
+
+            const binaryString = atob(paddedBase64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes;
+        } catch (error) {
+            console.error('Base64 解碼錯誤:', error);
+            throw new Error('簽名資料格式錯誤，無法進行驗證');
         }
-        return bytes;
     }
 
     // 文件驗證函數
