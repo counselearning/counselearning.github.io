@@ -134,69 +134,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             try {
                 // 輸出簽名資料進行診斷
-                console.log('簽名資料內容:', signatureData.mp3.data);
+                console.log('簽名資料內容:', signatureData.mp3.data.substring(0, 50) + '...');
                 
                 // 使用 OpenPGP.js 進行驗證
                 const publicKey = await openpgp.readKey({ armoredKey: publicKeyData.key });
                 
-                // 預處理簽名資料 - 嘗試不同方式
-                let signature;
-                try {
-                    // 方法1: 直接使用 OpenPGP.js 的簽名讀取功能
-                    console.log('嘗試方法1: 直接讀取二進制簽名');
-                    
-                    // 檢查簽名資料是否符合 Base64 格式
-                    const base64Regex = /^[A-Za-z0-9+/=]+$/;
-                    let signatureString = signatureData.mp3.data;
-                    
-                    // 如果不符合 Base64 格式，則嘗試處理
-                    if (!base64Regex.test(signatureString.replace(/[\s\n\r]/g, ''))) {
-                        console.log('簽名資料不符合標準 Base64 格式，嘗試處理');
-                        // 可能是 ASCII armored 格式，嘗試直接使用
-                        signature = await openpgp.readSignature({
-                            armoredSignature: signatureString
-                        });
-                    } else {
-                        // 正常 Base64 格式，先轉換為 Uint8Array
-                        const uint8Array = base64ToUint8Array(signatureString);
-                        signature = await openpgp.readSignature({
-                            binarySignature: uint8Array
-                        });
-                    }
-                } catch (err1) {
-                    console.error('方法1失敗:', err1);
-                    
-                    try {
-                        // 方法2: 使用 OpenPGP.js 的 armor 功能
-                        console.log('嘗試方法2: 使用 armor 功能');
-                        
-                        // 將 Base64 轉換為 PGP 簽名格式
-                        const armoredSignature = 
-                            '-----BEGIN PGP SIGNATURE-----\n\n' + 
-                            signatureData.mp3.data +
-                            '\n-----END PGP SIGNATURE-----';
-                        
-                        signature = await openpgp.readSignature({
-                            armoredSignature: armoredSignature
-                        });
-                    } catch (err2) {
-                        console.error('方法2失敗:', err2);
-                        
-                        // 方法3: 嘗試使用硬編碼的簽名資料
-                        console.log('嘗試方法3: 使用硬編碼的簽名資料');
-                        const hardcodedSignature = "iQEzBAABCAAdFiEECt/eLYukm9tjR2trHJC0svdjLxAFAmfk09gACgkQHJC0svdjLxC4PggAhzKjM/pd/4pv7BYE7qXi0f7NYHbePDDkOfdIy9F9n3S3ZGE4QLTIRaw6knyzU3icbzD9s0U7ROOYY4C8n9/GL+GmxjDGnKO0Z/aRU9Ty+U/tbB7t6SzG2QBEAAVTXUWjsOM011cbwidm5L8LYIWl9C85Ug8dlE6BDeisaHxmTh3fi8Dy585jF8k5/AdFxW8j+3NfsNeQQWA5rOBtDn0IXm0BcgeFEaSIloInzn/+XNfREsyd8UD1t1vgPHQFGU3ebaiqwU3ny8S0Yr70wTCxwhNmvEJtQ5Uvla9+qWwbYCgdmQkdC8jk2T3uyHKarsuYGDFiDt5AgRT7ed+u2rUaIQ==";
-                        
-                        // 將 Base64 轉換為 PGP 簽名格式
-                        const armoredSignature = 
-                            '-----BEGIN PGP SIGNATURE-----\n\n' + 
-                            hardcodedSignature +
-                            '\n-----END PGP SIGNATURE-----';
-                        
-                        signature = await openpgp.readSignature({
-                            armoredSignature: armoredSignature
-                        });
-                    }
-                }
+                // 使用 PGP 格式的簽名
+                const signature = await openpgp.readSignature({
+                    armoredSignature: signatureData.mp3.data
+                });
                 
                 // 驗證檔案
                 const verificationResult = await openpgp.verify({
