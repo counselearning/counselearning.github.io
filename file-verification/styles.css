@@ -1,0 +1,381 @@
+/* 套用全局設計風格 */
+:root {
+    --primary-color: #A17A69; /* 暖棕色：主要按鈕、重點文字 */
+    --secondary-color: #D4B2A7; /* 淺暖棕：次要元素、hover 狀態 */
+    --background-color: #FAF6F3; /* 米白色：背景色 */
+    --text-color: #2C1810; /* 深棕色：主要文字 */
+    --hover-color: #8B6355; /* 深暖棕：hover 效果 */
+    --success-color: #22C55E; /* 成功綠色 */
+    --error-color: #EF4444; /* 錯誤紅色 */
+    --gray-light: #E5E7EB; /* 淺灰色：邊框、分隔線 */
+    --gray: #9CA3AF; /* 灰色：次要文字 */
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 統一過渡效果 */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: min(90%, 1200px);
+    margin: 0 auto;
+    padding: clamp(16px, 5vw, 40px);
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: var(--transition);
+    opacity: 1;
+    transform: translateY(0);
+    min-height: 80vh;
+    justify-content: center;
+}
+
+.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* 標題樣式 */
+h1 {
+    font-size: clamp(28px, 5vw, 36px);
+    margin-bottom: 24px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+h2 {
+    font-size: clamp(24px, 4vw, 32px);
+    margin-bottom: 16px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+/* 描述文字 */
+.description {
+    margin-bottom: 40px;
+    text-align: center;
+    max-width: 700px;
+    font-size: clamp(16px, 3vw, 18px);
+}
+
+.description p {
+    margin-bottom: 16px;
+}
+
+strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* 按鈕樣式 */
+.start-btn, .verify-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: clamp(16px, 3vw, 18px);
+    font-weight: 600;
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+}
+
+.start-btn:hover, .verify-btn:hover {
+    background-color: var(--hover-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.back-btn, .secondary-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    font-size: clamp(16px, 3vw, 18px);
+    font-weight: 600;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: var(--transition);
+    margin: 10px;
+}
+
+.back-btn:hover, .secondary-btn:hover {
+    background-color: rgba(161, 122, 105, 0.1);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background-color: var(--gray);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 上傳區域樣式 */
+.upload-container {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 32px;
+}
+
+.upload-area {
+    border: 2px dashed var(--secondary-color);
+    border-radius: 24px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: rgba(212, 178, 167, 0.05);
+    margin-bottom: 20px;
+}
+
+.upload-area:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(212, 178, 167, 0.1);
+}
+
+.upload-area.drag-over {
+    border-color: var(--primary-color);
+    background-color: rgba(212, 178, 167, 0.15);
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.browse-text {
+    color: var(--primary-color);
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.file-types {
+    color: var(--gray);
+    font-size: clamp(14px, 2.5vw, 16px);
+    margin-top: 8px;
+}
+
+.hidden-input {
+    display: none;
+}
+
+/* 已選擇檔案樣式 */
+.selected-file-container {
+    background-color: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selected-file-details {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.file-icon {
+    color: var(--primary-color);
+}
+
+.file-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.file-size {
+    color: var(--gray);
+    font-size: 14px;
+}
+
+.remove-btn {
+    color: var(--primary-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.remove-btn:hover {
+    background-color: rgba(161, 122, 105, 0.1);
+}
+
+/* 進階設定部分 */
+.key-management {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px 0 30px;
+}
+
+details {
+    width: 100%;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+summary {
+    padding: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+summary:hover {
+    background-color: rgba(161, 122, 105, 0.05);
+}
+
+summary::after {
+    content: "▼";
+    font-size: 12px;
+}
+
+details[open] summary::after {
+    content: "▲";
+}
+
+.public-key-container {
+    padding: 16px;
+    border-top: 1px solid var(--gray-light);
+}
+
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    font-family: monospace;
+    margin: 8px 0;
+    resize: vertical;
+}
+
+.note {
+    font-size: 14px;
+    color: var(--gray);
+    margin-top: 8px;
+}
+
+/* 結果頁面樣式 */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(161, 122, 105, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-container {
+    background-color: white;
+    border-radius: 24px;
+    padding: 32px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+    margin: 20px 0 40px;
+}
+
+.result-icon {
+    margin-bottom: 16px;
+}
+
+.result-container.success h2 {
+    color: var(--success-color);
+}
+
+.result-container.fail h2 {
+    color: var(--error-color);
+}
+
+.file-details, .error-details {
+    text-align: left;
+    background-color: var(--background-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 24px;
+}
+
+.file-details p, .error-details p {
+    margin-bottom: 8px;
+}
+
+.result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    .result-actions {
+        flex-direction: column;
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .back-btn, .secondary-btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+/* Logo 樣式 */
+.logo-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+} 

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>檔案驗證 - 雲端心理測驗平台</title>
+    
+    <!-- 添加網站圖示引用 -->
+    <link rel="icon" href="../favicon/favicon.svg" type="image/svg+xml">
+    
+    <link rel="stylesheet" href="styles.css">
+    <!-- 引入 OpenPGP.js 庫 -->
+    <script src="https://unpkg.com/openpgp@5.5.0/dist/openpgp.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 添加 logo -->
+        <div class="logo-container">
+            <a href="../index.html">
+                <img src="../logo.svg" alt="雲端心理測驗平台" class="logo" width="40" height="40">
+            </a>
+        </div>
+        
+        <!-- 入口頁面 -->
+        <section id="intro" class="section">
+            <h1>檔案驗證工具</h1>
+            <div class="description">
+                <p>此工具可以幫助您驗證檔案的真實性和完整性。</p>
+                <p>我們使用<strong>PGP數位簽名</strong>技術來確保檔案未被篡改，並且來自可信的來源。</p>
+                <p>您只需上傳需要驗證的檔案，我們將自動為您驗證其完整性。</p>
+            </div>
+            <button id="startVerification" class="start-btn">開始驗證</button>
+        </section>
+
+        <!-- 驗證頁面 -->
+        <section id="verification" class="section hidden">
+            <h2>上傳檔案</h2>
+            <div class="upload-container">
+                <div class="upload-area" id="dropZone">
+                    <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M12 5L7 10M12 5L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 15V17C5 18.1046 5.89543 19 7 19H17C18.1046 19 19 18.1046 19 17V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <p>拖放檔案至此處，或<label for="fileInput" class="browse-text">瀏覽檔案</label></p>
+                    <p class="file-types">支援的檔案類型：MP3、PDF</p>
+                    <input type="file" id="fileInput" accept=".mp3,.pdf" class="hidden-input">
+                </div>
+                <div class="selected-file-container hidden" id="selectedFileInfo">
+                    <div class="selected-file-details">
+                        <svg class="file-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div>
+                            <p class="file-name" id="fileName">檔案名稱</p>
+                            <p class="file-size" id="fileSize">檔案大小</p>
+                        </div>
+                    </div>
+                    <button id="removeFileBtn" class="remove-btn">移除</button>
+                </div>
+            </div>
+            <button id="verifyBtn" class="verify-btn" disabled>驗證檔案</button>
+            <button id="backToIntro" class="back-btn">返回</button>
+        </section>
+
+        <!-- 結果頁面 -->
+        <section id="result" class="section hidden">
+            <div id="loadingResult" class="loading-container">
+                <div class="spinner"></div>
+                <p>正在驗證檔案，請稍候...</p>
+            </div>
+            <div id="successResult" class="result-container success hidden">
+                <svg class="result-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M22 4L12 14.01L9 11.01" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2>驗證成功</h2>
+                <p>檔案驗證成功！此檔案完整且未被篡改。</p>
+                <div class="file-details">
+                    <p><strong>檔案名稱：</strong><span id="verifiedFileName">檔案名稱</span></p>
+                    <p><strong>檔案大小：</strong><span id="verifiedFileSize">檔案大小</span></p>
+                    <p><strong>驗證時間：</strong><span id="signatureTime">驗證時間</span></p>
+                    <p><strong>簽名者：</strong><span id="signerName">簽名者姓名</span></p>
+                    <p><strong>簽名者郵箱：</strong><span id="signerEmail">簽名者郵箱</span></p>
+                    <p><strong>簽名日期：</strong><span id="signatureDate">簽名日期</span></p>
+                    <p><strong>金鑰ID：</strong><span id="signerKeyId">金鑰ID</span></p>
+                </div>
+            </div>
+            <div id="failResult" class="result-container fail hidden">
+                <svg class="result-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15 9L9 15" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 9L15 15" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2>驗證失敗</h2>
+                <p>檔案驗證失敗。此檔案可能已被篡改或不是來自可信來源。</p>
+                <div class="error-details">
+                    <p><strong>錯誤信息：</strong><span id="errorMessage">驗證失敗的詳細原因</span></p>
+                </div>
+            </div>
+            <div class="result-actions">
+                <button id="verifyAnother" class="secondary-btn">驗證另一個檔案</button>
+                <button id="backToHome" class="back-btn">返回首頁</button>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
